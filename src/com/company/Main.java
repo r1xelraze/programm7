@@ -1,6 +1,14 @@
 package com.company;
 
 public class Main {
+    public static class FactorialExeption extends Exception{
+        public FactorialExeption(Throwable e){
+            initCause(e);
+            System.out.println("Введите положительное число");
+        }
+
+    }
+
     static class formula2{
         int n;
         double x;
@@ -9,25 +17,32 @@ public class Main {
             this.x = x;
         }
 
-        public void displayFormula() {
+        public void displayFormula() throws FactorialExeption {
             double num1 = Math.pow(x, x);
             int num2 = 1;
-            if (n >= 0) {
-                for (int i = 1; i <= n; i++) {
-                    num2 = num2 * i;
+            try {
+                if (n >= 0) {
+                    for (int i = 1; i <= n; i++) {
+                        num2 = num2 * i;
+                    }
+                    double y = (num1 / num2);
+                    System.out.print(y);
                 }
-                double y = (num1 / num2);
-                System.out.print(y);
             }
-            else
-            {
-                System.out.println("Введи число большее или равное нулю");
+            catch (IllegalArgumentException e){
+                throw new FactorialExeption(e);
+
             }
+
+
+
+
+
         }
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FactorialExeption {
         formula2 formm = new formula2(2,5);
         System.out.println("Результат formm: ");
         formm.displayFormula();
