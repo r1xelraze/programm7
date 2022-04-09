@@ -1,56 +1,57 @@
 package com.company;
 
+
+import java.util.Scanner;
+
 public class Main {
-    public static class FactorialExeption extends Exception{
-        public FactorialExeption(Throwable e){
-            initCause(e);
-            System.out.println("Введите положительное число");
-        }
+    static class formula {
+        float x;
+        float y;
+        float z;
 
-    }
-
-    static class formula2{
-        int n;
-        double x;
-        public formula2(int n, double x){
-            this.n = n;
+        public formula(float x, float y, float z) {
             this.x = x;
+            this.y = y;
+            this.z = z;
         }
 
-        public void displayFormula() throws FactorialExeption {
-            double num1 = Math.pow(x, x);
-            int num2 = 1;
-            try {
-                if (n >= 0) {
-                    for (int i = 1; i <= n; i++) {
-                        num2 = num2 * i;
-                    }
-                    double y = (num1 / num2);
-                    System.out.print(y);
-                }
-            }
-            catch (IllegalArgumentException e){
-                throw new FactorialExeption(e);
+        public void dispalayFormula() throws VectorException {
+            if (x < 0) throw new VectorException("X отрицательно");
+            if (y < 0) throw new VectorException("Y отрицательно");
+            if (z < 0) throw new VectorException("Z отрицательно");
+
+            double len = Math.sqrt((Math.pow(x, 2) + (Math.pow(y, 2)) + (Math.pow(z, 2))));
+            System.out.println("Длина вектора: " + len);
+
+        }
+
+        static class VectorException extends Exception {
+            public VectorException(String message) {
+
+                super(message);
 
             }
-
-
-
-
-
         }
 
     }
 
-    public static void main(String[] args) throws FactorialExeption {
-        formula2 formm = new formula2(2,5);
-        System.out.println("Результат formm: ");
-        formm.displayFormula();
-        formula2 formm2 = new formula2(-5,3);
-        System.out.println();
-        System.out.println("Результат formm2: ");
-        formm2.displayFormula();
+    public static void main(String[] args) {
 
+        try {
+            Scanner in = new Scanner(System.in);
+            System.out.println("Введите x:");
+            int x = in.nextInt();
+
+            System.out.println("Введите y:");
+            int y = in.nextInt();
+
+            System.out.println("Введите z:");
+            int z = in.nextInt();
+
+            formula form = new formula(x, y, z);
+            form.dispalayFormula();
+        }catch (formula.VectorException ex){
+            System.out.println(ex.getMessage());
+        }
     }
-
 }
